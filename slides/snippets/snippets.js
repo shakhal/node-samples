@@ -66,7 +66,7 @@ class SlidesSnippets {
         fileId: presentationId,
         resource: request,
       }, (err, driveResponse) => {
-        let presentationCopyId = driveResponse.id;
+        let presentationCopyId = driveResponse.data.id;
         // [START_EXCLUDE silent]
         resolve(presentationCopyId);
         // [END_EXCLUDE]
@@ -103,7 +103,7 @@ class SlidesSnippets {
           requests,
         },
       }, (err, res) => {
-        console.log(`Created slide with ID: ${res.replies[0].createSlide.objectId}`);
+        console.log(`Created slide with ID: ${res.data.replies[0].createSlide.objectId}`);
         // [START_EXCLUDE silent]
         resolve(res);
         // [END_EXCLUDE]
@@ -160,7 +160,7 @@ class SlidesSnippets {
         presentationId,
         resource: {requests},
       }, (err, createTextboxWithTextResponse) => {
-        let createShapeResponse = createTextboxWithTextResponse.replies[0].createShape;
+        let createShapeResponse = createTextboxWithTextResponse.data.replies[0].createShape;
         console.log(`Created textbox with ID: ${createShapeResponse.objectId}`);
         // [START_EXCLUDE silent]
         resolve(createTextboxWithTextResponse);
@@ -213,7 +213,7 @@ class SlidesSnippets {
         presentationId,
         resource: {requests},
       }, (err, response) => {
-        let createImageResponse = response.replies;
+        let createImageResponse = response.data.replies;
         console.log(`Created image with ID: ${createImageResponse[0].createImage.objectId}`);
         // [START_EXCLUDE silent]
         resolve(createImageResponse);
@@ -295,12 +295,12 @@ class SlidesSnippets {
             }, (err, batchUpdateResponse) => {
               let result = batchUpdateResponse;
               // [START_EXCLUDE silent]
-              responses.push(result.replies);
+              responses.push(result.data.replies);
               // [END_EXCLUDE]
               // Count the total number of replacements made.
               let numReplacements = 0;
-              for (let i = 0; i < result.replies.length; ++i) {
-                numReplacements += result.replies[i].replaceAllText.occurrencesChanged;
+              for (let i = 0; i < result.data.replies.length; ++i) {
+                numReplacements += result.data.replies[i].replaceAllText.occurrencesChanged;
               }
               console.log(`Created presentation for ${customerName} with ID: ` +
                   presentationCopyId);
@@ -369,8 +369,8 @@ class SlidesSnippets {
           },
         }, (err, batchUpdateResponse) => {
           let numReplacements = 0;
-          for (let i = 0; i < batchUpdateResponse.replies.length; ++i) {
-            numReplacements += batchUpdateResponse.replies[i]
+          for (let i = 0; i < batchUpdateResponse.data.replies.length; ++i) {
+            numReplacements += batchUpdateResponse.data.replies[i]
                 .replaceAllShapesWithImage.occurrencesChanged;
           }
           console.log(`Created merged presentation with ID: ${presentationCopyId}`);
